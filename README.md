@@ -67,28 +67,36 @@ The app uses a microservices architecture. This means that different parts of th
 
 Here's the high-level process you'll follow:
 
-```
-1. Create Azure VM (Ubuntu)
-   ↓
-2. Configure Network Security Group (Open Ports)
-   ↓
-3. Connect via VS Code Remote-SSH
-   ↓
-4. Clone Repository
-   ↓
-5. Install Services in Order:
-   a. RabbitMQ (message broker)
-   b. Product Service (Rust)
-   c. Order Service (Node.js)
-   d. Store Front (Vue.js)
-   ↓
-6. Test Application in Browser
-   ↓
-7. Record Demo Video
-   ↓
-8. Write Technical Explanations
-   ↓
-9. Submit to Brightspace
+```mermaid
+flowchart TD
+    A[1. Create Azure VM - Ubuntu] --> B[2. Configure Network Security Group - Open Ports]
+    B --> C[3. Connect via VS Code Remote-SSH]
+    C --> D[4. Clone Repository]
+    D --> E[5. Install Services in Order]
+
+    E --> E1[a. RabbitMQ - message broker]
+    E1 --> E2[b. Product Service - Rust]
+    E2 --> E3[c. Order Service - Node.js]
+    E3 --> E4[d. Store Front - Vue.js]
+
+    E4 --> F[6. Test Application in Browser]
+    F --> G[7. Record Demo Video]
+    G --> H[8. Write Technical Explanations]
+    H --> I[9. Submit to Brightspace]
+
+    style A fill:#4A90D9,stroke:#2E5A8B,color:#fff
+    style B fill:#4A90D9,stroke:#2E5A8B,color:#fff
+    style C fill:#4A90D9,stroke:#2E5A8B,color:#fff
+    style D fill:#4A90D9,stroke:#2E5A8B,color:#fff
+    style E fill:#5BA85B,stroke:#3D7A3D,color:#fff
+    style E1 fill:#7BC47B,stroke:#5BA85B,color:#000
+    style E2 fill:#7BC47B,stroke:#5BA85B,color:#000
+    style E3 fill:#7BC47B,stroke:#5BA85B,color:#000
+    style E4 fill:#7BC47B,stroke:#5BA85B,color:#000
+    style F fill:#E8A838,stroke:#B8831C,color:#000
+    style G fill:#E8A838,stroke:#B8831C,color:#000
+    style H fill:#E8A838,stroke:#B8831C,color:#000
+    style I fill:#D95B5B,stroke:#A83D3D,color:#fff
 ```
 
 ---
@@ -263,14 +271,24 @@ Now that you're connected to your Azure VM via VS Code, it's time to clone the r
 
 **IMPORTANT**: Services must be installed and started in this specific order because they depend on each other:
 
-```
-1. RabbitMQ (backing service - must be first)
-   ↓
-2. Product Service (independent service)
-   ↓
-3. Order Service (depends on RabbitMQ)
-   ↓
-4. Store Front (depends on Product & Order services)
+```mermaid
+flowchart TD
+    subgraph install["Installation Order"]
+        R[1. RabbitMQ<br/>backing service - must be first]
+        P[2. Product Service<br/>independent service]
+        O[3. Order Service<br/>depends on RabbitMQ]
+        S[4. Store Front<br/>depends on Product & Order services]
+
+        R --> P
+        P --> O
+        O --> S
+    end
+
+    style R fill:#FF6B6B,stroke:#CC5555,color:#fff
+    style P fill:#4ECDC4,stroke:#3BA89F,color:#000
+    style O fill:#45B7D1,stroke:#3692A8,color:#000
+    style S fill:#96CEB4,stroke:#78A892,color:#000
+    style install fill:#f8f9fa,stroke:#dee2e6
 ```
 
 #### 4.3: Install RabbitMQ (Message Broker)

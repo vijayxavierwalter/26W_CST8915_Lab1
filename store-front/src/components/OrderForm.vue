@@ -89,7 +89,7 @@ export default {
       }
 
       try {
-        const response = await fetch('https://order-service-app-a9htgzhpbugfe4h5.canadacentral-01.azurewebsites.net/orders', {
+        const response = await fetch('https://order-service-app-a9htgzhpbugfe4h5.canadacentral-01.azurewebsites.net/products', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
